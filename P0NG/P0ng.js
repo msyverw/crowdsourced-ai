@@ -15,92 +15,93 @@ var ballSpeedRatio = ballSpeed/pixel * .75;
 var two_player = false;
 var ai;
 
+
 //DOM stuff
-//$(document).ready(function() {
-	canvas = document.getElementById('game');
-	context = canvas.getContext('2d');
-	maxPaddleY = canvas.height - paddleHeight;
 
-	leftPaddle = {
-		// start in the middle of the game on the left side
-		x: pixel * 2,
-		y: (canvas.height - paddleHeight) / 2,
-		yc: function() {return this.y + this.height/2;},
-		set_yc: function(_y) {this.y = _y - this.height/2;},
-		width: pixel,
-		height: paddleHeight,
+canvas = document.getElementById('game');
+context = canvas.getContext('2d');
+maxPaddleY = canvas.height - paddleHeight;
 
-		// paddle velocity
-		up: 0,
-		down: 0
-	};
-	rightPaddle = {
-		// start in the middle of the game on the right side
-		x: canvas.width - pixel * 3,
-		y: (canvas.height - paddleHeight) / 2,
-		yc: function() {return this.y + this.height/2;},
-		width: pixel,
-		height: paddleHeight,
+leftPaddle = {
+	// start in the middle of the game on the left side
+	x: pixel * 2,
+	y: (canvas.height - paddleHeight) / 2,
+	yc: function() {return this.y + this.height/2;},
+	set_yc: function(_y) {this.y = _y - this.height/2;},
+	width: pixel,
+	height: paddleHeight,
 
-		// paddle velocity
-		up: 0,
-		down: 0
-	};
-	ball = {
-		// start in the middle of the game
-		x: (canvas.width - pixel) / 2,
-		y: (canvas.height - pixel) / 2,
-		yc: function() {return this.y + this.height/2;},
-		width: pixel,
-		height: pixel,
+	// paddle velocity
+	up: 0,
+	down: 0
+};
+rightPaddle = {
+	// start in the middle of the game on the right side
+	x: canvas.width - pixel * 3,
+	y: (canvas.height - paddleHeight) / 2,
+	yc: function() {return this.y + this.height/2;},
+	width: pixel,
+	height: paddleHeight,
 
-		// keep track of when need to reset the ball position
-		scoring: false,
+	// paddle velocity
+	up: 0,
+	down: 0
+};
+ball = {
+	// start in the middle of the game
+	x: (canvas.width - pixel) / 2,
+	y: (canvas.height - pixel) / 2,
+	yc: function() {return this.y + this.height/2;},
+	width: pixel,
+	height: pixel,
 
-		// ball velocity (start going to the top-right corner)
-		dx: ballSpeed,
-		dy: -ballSpeed
-	};
-	maxBallY = canvas.height - ball.height;
-	
-	leftScore = $("#leftScore");
-	rightScore = $("#rightScore");
-	
-	//Draw initial positions
-	draw();
-	cancelAnimationFrame(animateID);
-	
-	//Buttons
-	$("#startButton").on("click touchstart", function() {
-		two_player = false;
-		startGame();
-	});
-	$("#twoPlayer").click(function() {
-		two_player = true;
-		startGame();
-	});
-	$("#infoButton").on("click touchstart", function() {
-		window.open('https://docs.google.com/spreadsheets/d/1mx3Xh_Ko7WkvPbPRbsnvfbbALWHY9QnkYhUcO2QWqo0/edit?usp=sharing', '_blank').focus();
-	});
-	if(window.isMobile()) {
-		$("#twoPlayer").hide();
-	}
-	
-	//Controller buttons
-	$("#controls").hide();
-	$("#controls > button:nth-child(2)").on("touchstart", function() {
-		rightPaddle.up = 1;
-	});
-	$("#controls > button:nth-child(2)").on("touchend", function() {
-		rightPaddle.up = 0;
-	});
-	$("#controls > button:last-child").on("touchstart", function() {
-		rightPaddle.down = 1;
-	});
-	$("#controls > button:last-child").on("touchend", function() {
-		rightPaddle.down = 0;
-	});
-//});
+	// keep track of when need to reset the ball position
+	scoring: false,
+
+	// ball velocity (start going to the top-right corner)
+	dx: ballSpeed,
+	dy: -ballSpeed
+};
+maxBallY = canvas.height - ball.height;
+
+leftScore = $("#leftScore");
+rightScore = $("#rightScore");
+
+//Draw initial positions
+draw();
+cancelAnimationFrame(animateID);
+
+//Buttons
+$("#startButton").on("click touchstart", function() {
+	two_player = false;
+	startGame();
+});
+$("#twoPlayer").click(function() {
+	two_player = true;
+	startGame();
+});
+$("#infoButton").on("click touchstart", function() {
+	window.open('https://docs.google.com/spreadsheets/d/1mx3Xh_Ko7WkvPbPRbsnvfbbALWHY9QnkYhUcO2QWqo0/edit?usp=sharing', '_blank').focus();
+});
+if(window.isMobile()) {
+	$("#twoPlayer").hide();
+}
+
+//Controller buttons
+$("#controls").hide();
+$("#controls > button:nth-child(2)").on("touchstart", function() {
+	rightPaddle.up = 1;
+});
+$("#controls > button:nth-child(2)").on("touchend", function() {
+	rightPaddle.up = 0;
+});
+$("#controls > button:last-child").on("touchstart", function() {
+	rightPaddle.down = 1;
+});
+$("#controls > button:last-child").on("touchend", function() {
+	rightPaddle.down = 0;
+});
+
 
 // check for collision between two objects using axis-aligned bounding box (AABB)
 // @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
