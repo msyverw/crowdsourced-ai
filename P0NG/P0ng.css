@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Silkscreen';
-  src: url('/fonts/silkscreen/slkscr.ttf')  format('truetype')
+  src: url('../fonts/silkscreen/slkscr.ttf')  format('truetype')
 }
 
 html, body {
