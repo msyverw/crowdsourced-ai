@@ -16,7 +16,7 @@ var two_player = false;
 var ai;
 
 //DOM stuff
-$(document).ready(function() {
+//$(document).ready(function() {
 	canvas = document.getElementById('game');
 	context = canvas.getContext('2d');
 	maxPaddleY = canvas.height - paddleHeight;
@@ -100,7 +100,7 @@ $(document).ready(function() {
 	$("#controls > button:last-child").on("touchend", function() {
 		rightPaddle.down = 0;
 	});
-});
+//});
 
 // check for collision between two objects using axis-aligned bounding box (AABB)
 // @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
