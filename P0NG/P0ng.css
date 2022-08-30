@@ -79,7 +79,6 @@ button.right {
 #controls {
 	position: fixed;
 	right: 0;
-	display: none;
 }
 #controls > button {
 	width: 10vw;
