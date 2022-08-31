@@ -1,4 +1,5 @@
 import {Network} from "./Network.js"
+import {database} from "./firebase.js"
 
 export class AI {
 	network;
@@ -44,6 +45,8 @@ export class AI {
 	
 	//Post to database
 	post(data) {
+		database.writeUserData("user1","bob","bob@no","none")
+		return;
 		console.log(data);
 		console.log(JSON.parse(data));
 		return $.ajax({
