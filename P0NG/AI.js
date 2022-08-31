@@ -1,4 +1,6 @@
-class AI {
+import {Network} from "Network.js"
+
+export class AI {
 	network;
 	name;
 	generation;
@@ -6,7 +8,7 @@ class AI {
 	constructor(inputs, outputs, ai=true) {
 		let self = this;
 		//Get brain from db
-		this.post({getAI: JSON.stringify(ai)}).then(function(response) {
+		this.post(JSON.stringify({getAI: ai})).then(function(response) {
 			//let links = {"0-5": "0", "3-5": "1", "2-5": "1", "3-7": "1", "2-7": "1", "0-7": "-1", "7-5": "-2"};
 			self.name = response.name;
 			self.generation = response.generation;
@@ -42,19 +44,37 @@ class AI {
 	
 	//Post to database
 	post(data) {
+		console.log(data);
+		console.log(JSON.parse(data));
 		return $.ajax({
-            url: "https://script.google.com/macros/s/AKfycbyub9feAQQ-xJv1jJV0dUaw0tYe-M_2IxpGn1xwVcQZqcrDwHULtmHe5UvP4LKVmUwNNQ/exec",
+            url: "https://script.google.com/macros/s/AKfycbx2BxCxX5L93HtiA74908fyTnwi9LLiUl8xWnPjghHb/dev",
             type: "post",
-			data: data
+			crossDomain: true,
+			data: JSON.parse(data),
+			redirect: "follow",
+			dataType: "jsonp",
+			headers: {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "x-requested-with"}
         });
 	}
 	postFitness(score) {
-		return this.post({name: this.name, generation: this.generation, fitness: score});
+		return this.post({
+			name: this.name,
+			generation: this.generation,
+			fitness: score
+		});
 	}
 	postMsg(name, msg) {
-		return this.post({Msg: true, Name: name, Comment: msg});
+		return this.post({
+			Msg: true,
+			Name: name,
+			Comment: msg
+		});
 	}
 	postErr(error) {
-		return this.post({Msg: true, Error: error, Species: "test"});
+		return this.post({
+			Msg: true,
+			Error: error,
+			Species: "test"
+		});
 	}
 }

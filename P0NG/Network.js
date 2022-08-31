@@ -1,4 +1,6 @@
-class Network {
+import {Node} from "Node.js"
+
+export class Network {
 	nodes = [];
 	links = [];
 	out_index;

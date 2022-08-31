@@ -1,6 +1,8 @@
 // Basic Pong functionality taken from straker's project here:
 // https://gist.github.com/straker/81b59eecf70da93af396f963596dfdc5
 
+import {AI} from "AI.js";
+
 //Variables
 var gameID, animateID;
 var leftPoints, rightPoints, leftScore, rightScore, bounces;

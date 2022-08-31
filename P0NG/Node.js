@@ -1,4 +1,4 @@
-class Node {
+export class Node {
 	weights = [];
 	output = 0;
 	is_input = false;
