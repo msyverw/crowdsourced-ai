@@ -1,4 +1,4 @@
-import {Network} from "Network.js"
+import {Network} from "./Network.js"
 
 export class AI {
 	network;
